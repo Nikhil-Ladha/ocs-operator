@@ -20,6 +20,7 @@ import (
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	extv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/utils/ptr"
@@ -259,6 +260,17 @@ func generateUnifiedCSV() *csvv1.ClusterServiceVersion {
 	ocsCSV.Annotations["operators.operatorframework.io/internal-objects"] = ""
 
 	templateStrategySpec := &ocsCSV.Spec.InstallStrategy.StrategySpec
+
+	// set default mem/cpu requests/limits value in csv
+	templateStrategySpec.DeploymentSpecs[0].Spec.Template.Spec.Containers[0].Resources = corev1.ResourceRequirements{
+		Requests: corev1.ResourceList{
+			corev1.ResourceCPU:    resource.MustParse("1"),
+			corev1.ResourceMemory: resource.MustParse("256Mi"),
+		},
+		Limits: corev1.ResourceList{
+			corev1.ResourceMemory: resource.MustParse("512Mi"),
+		},
+	}
 
 	// whitelisting APIs
 	for index, definition := range ocsCSV.Spec.CustomResourceDefinitions.Owned {
@@ -695,6 +707,15 @@ func getUXBackendServerDeployment() appsv1.DeploymentSpec {
 						SecurityContext: &corev1.SecurityContext{
 							RunAsNonRoot:           ptr.To(true),
 							ReadOnlyRootFilesystem: ptr.To(true),
+						},
+						Resources: corev1.ResourceRequirements{
+							Requests: corev1.ResourceList{
+								corev1.ResourceCPU:    resource.MustParse("100m"),
+								corev1.ResourceMemory: resource.MustParse("128Mi"),
+							},
+							Limits: corev1.ResourceList{
+								corev1.ResourceMemory: resource.MustParse("256Mi"),
+							},
 						},
 					},
 					{

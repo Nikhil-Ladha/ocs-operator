@@ -1099,6 +1099,24 @@ func newCephDaemonResources(sc *ocsv1.StorageCluster) map[string]corev1.Resource
 	resources := map[string]corev1.ResourceRequirements{
 		"mon": defaults.GetProfileDaemonResources("mon", sc),
 		"mgr": defaults.GetProfileDaemonResources("mgr", sc),
+		"crashcollector": {
+			Requests: corev1.ResourceList{
+				corev1.ResourceCPU:    resource.MustParse("100m"),
+				corev1.ResourceMemory: resource.MustParse("60Mi"),
+			},
+			Limits: corev1.ResourceList{
+				corev1.ResourceMemory: resource.MustParse("100Mi"),
+			},
+		},
+		"logcollector": {
+			Requests: corev1.ResourceList{
+				corev1.ResourceCPU:    resource.MustParse("100m"),
+				corev1.ResourceMemory: resource.MustParse("100Mi"),
+			},
+			Limits: corev1.ResourceList{
+				corev1.ResourceMemory: resource.MustParse("1Gi"),
+			},
+		},
 	}
 	custom := sc.Spec.Resources
 	for k := range custom {
