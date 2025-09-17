@@ -104,7 +104,7 @@ rules:
       - get
       - list
   - apiGroups:
-      - noobaas.io
+      - noobaa.io
     resources:
       - noobaas
     verbs:
