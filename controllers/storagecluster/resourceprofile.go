@@ -57,7 +57,7 @@ func (r *StorageClusterReconciler) ensureResourceProfileChangeApplied(sc *ocsv1.
 	}
 
 	// Verify if expected number of mds pods with the current resource profile label are running
-	if err := r.verifyDaemonWithResourceProfile(sc.Namespace, map[string]string{"app": "rook-ceph-mds", defaults.ODFResourceProfileKey: currentResourceProfile}, 2*getActiveMetadataServers(sc)); err != nil {
+	if err := r.verifyDaemonWithResourceProfile(sc.Namespace, map[string]string{"app": "rook-ceph-mds", defaults.ODFResourceProfileKey: currentResourceProfile}, getActiveMetadataServers(sc)); err != nil {
 		return err
 	}
 

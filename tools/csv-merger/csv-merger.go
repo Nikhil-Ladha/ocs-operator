@@ -273,10 +273,6 @@ func generateUnifiedCSV() *csvv1.ClusterServiceVersion {
 			corev1.ResourceCPU:    resource.MustParse("50m"),
 			corev1.ResourceMemory: resource.MustParse("128Mi"),
 		},
-		Limits: corev1.ResourceList{
-			corev1.ResourceCPU:    resource.MustParse("250m"),
-			corev1.ResourceMemory: resource.MustParse("512Mi"),
-		},
 	}
 
 	// whitelisting APIs
@@ -715,10 +711,6 @@ func getUXBackendServerDeployment() appsv1.DeploymentSpec {
 								corev1.ResourceCPU:    resource.MustParse("50m"),
 								corev1.ResourceMemory: resource.MustParse("128Mi"),
 							},
-							Limits: corev1.ResourceList{
-								corev1.ResourceCPU:    resource.MustParse("250m"),
-								corev1.ResourceMemory: resource.MustParse("512Mi"),
-							},
 						},
 
 						SecurityContext: &corev1.SecurityContext{
@@ -763,10 +755,6 @@ func getUXBackendServerDeployment() appsv1.DeploymentSpec {
 							Requests: corev1.ResourceList{
 								corev1.ResourceCPU:    resource.MustParse("5m"),
 								corev1.ResourceMemory: resource.MustParse("50Mi"),
-							},
-							Limits: corev1.ResourceList{
-								corev1.ResourceCPU:    resource.MustParse("25m"),
-								corev1.ResourceMemory: resource.MustParse("256Mi"),
 							},
 						},
 					},
