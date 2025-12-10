@@ -38,7 +38,7 @@ func (r *StorageClusterReconciler) newCephFilesystemInstances(initStorageCluster
 			},
 			MetadataServer: cephv1.MetadataServerSpec{
 				ActiveCount:   int32(getActiveMetadataServers(initStorageCluster)),
-				ActiveStandby: true,
+				ActiveStandby: false,
 				Placement:     getPlacement(initStorageCluster, "mds"),
 				Resources:     getDaemonResources("mds", initStorageCluster),
 				// set PriorityClassName for the MDS pods

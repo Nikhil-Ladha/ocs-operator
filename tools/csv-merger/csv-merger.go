@@ -270,10 +270,6 @@ func generateUnifiedCSV() *csvv1.ClusterServiceVersion {
 			corev1.ResourceCPU:    resource.MustParse("50m"),
 			corev1.ResourceMemory: resource.MustParse("128Mi"),
 		},
-		Limits: corev1.ResourceList{
-			corev1.ResourceCPU:    resource.MustParse("250m"),
-			corev1.ResourceMemory: resource.MustParse("512Mi"),
-		},
 	}
 
 	// whitelisting APIs
